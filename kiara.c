@@ -20,14 +20,8 @@ int compileFile(){
 	size_t len = strlen(FILE_NAME);
 	strncpy(out, FILE_NAME, len-2);
 	out[len -2] = '\0';
-	snprintf(cmd, sizeof(cmd), "gcc %s -o %s", FILE_NAME, out);
-	int comp_re = system(cmd);
-	if(comp_re != 0){
-		return comp_re;
-	}
-	snprintf(out, sizeof(out), "./%s", out);
-	printf("%s", out);
-	system(out);
+	snprintf(cmd, sizeof(cmd), "gcc %s -o %s && ./%s", FILE_NAME, out, out);
+	return system(cmd);
 }
 
 int main(int argc, char* argv[]){
@@ -54,6 +48,8 @@ int main(int argc, char* argv[]){
 	if(checkFile()){
 		printf("[LOG] COMPILING FILE\n");
 
+	} else {
+		return 1;
 	}
 	compileFile();
 	return 0;
